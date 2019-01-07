@@ -1,0 +1,132 @@
+{% if section.settings.enable_personalization != blank %}
+{% if section.settings.product_tag == blank %}
+<div class="e2m_product_customiser">
+  
+  <p class="e2m_property_field">
+    <input type="hidden" name="properties[Customization]" value="No">
+    <input id="CUSTOMIZATION" type="checkbox" name="properties[Customization]" value="Yes">
+    <label for="CUSTOMIZATION">Customization</label>
+  </p>
+  
+  <div class="e2m_customiser_toggle">
+    <div class="CUSTOMIZIONE_SELECT">
+      <label for="Font Type">Font type</label>
+      <select id="font_type" name="properties[Font Type]">
+        <option selected="null" value="null">Select Font Type</option>
+        {% if section.settings.enable_type_personalization_font_1 != blank %}
+        <option value='{{ section.settings.type_personalization_font_1.family }}' data-style="{{ section.settings.type_personalization_font_1.style}}" data-weight="{{ section.settings.type_personalization_font_1.weight}}" data-fallback-families='{{ section.settings.type_personalization_font_1.fallback_families }}'>{{ section.settings.type_personalization_font_1.family }}</option>
+        {% endif %}
+        {% if section.settings.enable_type_personalization_font_2 != blank %}
+        <option value='{{ section.settings.type_personalization_font_2.family }}' data-style="{{ section.settings.type_personalization_font_2.style}}" data-weight="{{ section.settings.type_personalization_font_2.weight}}" data-fallback-families="{{ section.settings.type_personalization_font_2.fallback_families }}">{{ section.settings.type_personalization_font_2.family }}</option>
+        {% endif %}
+        {% if section.settings.enable_type_personalization_font_3 != blank %}
+        <option value='{{ section.settings.type_personalization_font_3.family }}' data-style="{{ section.settings.type_personalization_font_3.style}}" data-weight="{{ section.settings.type_personalization_font_3.weight}}" data-fallback-families="{{ section.settings.type_personalization_font_3.fallback_families }}">{{ section.settings.type_personalization_font_3.family }}</option>
+        {% endif %}
+      </select>
+    </div>
+
+    <div class="monogram_input">
+      <label for="monogram-text">Maximum 20 characters</label>
+      <input name="properties[Monogram Text]" type="text" maxlength="20" id="monogram" class="monogram_text" placeholder="Type Text Here" autocomplete="off" style="background-image:url({{ section.settings.monogram_image | img_url: '300x300' }});">
+    </div>
+  </div>
+  
+</div>
+{% else %}
+  {% if product.tags contains section.settings.product_tag %}
+  <div class="e2m_product_customiser">
+
+    <p class="e2m_property_field">
+      <input type="hidden" name="properties[Customization]" value="No">
+      <input id="CUSTOMIZATION" type="checkbox" name="properties[Customization]" value="Yes">
+      <label for="CUSTOMIZATION">Customization</label>
+    </p>
+
+    <div class="e2m_customiser_toggle">
+      <div class="CUSTOMIZIONE_SELECT">
+        <label for="Font Type">Font type</label>
+        <select id="font_type" name="properties[Font Type]">
+          <option selected="null" value="null">Select Font Type</option>
+          {% if section.settings.enable_type_personalization_font_1 != blank %}
+          <option value='{{ section.settings.type_personalization_font_1.family }}' data-style="{{ section.settings.type_personalization_font_1.style}}" data-weight="{{ section.settings.type_personalization_font_1.weight}}" data-fallback-families='{{ section.settings.type_personalization_font_1.fallback_families }}'>{{ section.settings.type_personalization_font_1.family }}</option>
+          {% endif %}
+          {% if section.settings.enable_type_personalization_font_2 != blank %}
+          <option value='{{ section.settings.type_personalization_font_2.family }}' data-style="{{ section.settings.type_personalization_font_2.style}}" data-weight="{{ section.settings.type_personalization_font_2.weight}}" data-fallback-families="{{ section.settings.type_personalization_font_2.fallback_families }}">{{ section.settings.type_personalization_font_2.family }}</option>
+          {% endif %}
+          {% if section.settings.enable_type_personalization_font_3 != blank %}
+          <option value='{{ section.settings.type_personalization_font_3.family }}' data-style="{{ section.settings.type_personalization_font_3.style}}" data-weight="{{ section.settings.type_personalization_font_3.weight}}" data-fallback-families="{{ section.settings.type_personalization_font_3.fallback_families }}">{{ section.settings.type_personalization_font_3.family }}</option>
+          {% endif %}
+        </select>
+      </div>
+
+      <div class="monogram_input">
+        <label for="monogram-text">Maximum 20 characters</label>
+        <input name="properties[Monogram Text]" type="text" maxlength="20" id="monogram" class="monogram_text" placeholder="Type Text Here" autocomplete="off" style="background-image:url({{ section.settings.monogram_image | img_url: '300x300' }});">
+      </div>
+    </div>
+
+  </div>
+  {% endif %}
+{% endif %}
+<script>
+
+  if(jQuery('#CUSTOMIZATION').is(":checked")){
+    jQuery('.e2m_personalizar').show();
+  }else{
+    jQuery('.e2m_personalizar').hide();
+  }
+  jQuery('#CUSTOMIZATION').on('change',function(){
+
+    if(jQuery(this).is(":checked")){
+      jQuery('.e2m_personalizar,.e2m_customiser_toggle').fadeIn();
+    }else{
+      jQuery('.e2m_personalizar,.e2m_customiser_toggle').fadeOut();
+    }
+
+  });
+
+  jQuery('.customiser span').on('click',function(){ 
+    jQuery(this).addClass('active');
+    jQuery('.e2m_customiser_toggle').addClass('active');
+
+    if(jQuery('.customiser span').hasClass('active')){     
+      jQuery('.e2m_customiser_toggle').show();      
+    }else{
+      jQuery('.e2m_customiser_toggle').hide();
+    }
+  });
+
+  if(jQuery('.customiser span').hasClass('active')){
+    jQuery('.e2m_customiser_toggle').show();
+  }else{
+    jQuery('.e2m_customiser_toggle').hide();
+  }
+
+  jQuery('#font_type').on('change',function(){
+    jQuery('#monogram').removeAttr('class');
+    jQuery('#monogram').addClass('monogram_text font_'+jQuery(this).val().split(" ").join('_').toLowerCase());
+    jQuery('.monogram_input input').css({"font-weight":jQuery("option:selected",this).attr('data-weight'),"font-style":jQuery("option:selected",this).attr('data-style'),"font-family":jQuery(this).val()+','+jQuery("option:selected",this).attr('data-fallback-families')})
+  });
+
+</script>
+
+<style>
+{{ section.settings.type_personalization_font_1 | font_face }}
+  {{ section.settings.type_personalization_font_2 | font_face }}
+  {{ section.settings.type_personalization_font_3 | font_face }}
+  .e2m_property_field label{color:{{section.settings.personalization_heading_text_color}}; }
+  .e2m_customiser_toggle,.e2m_personalizar{ display:none;}
+  .e2m_personalizar p{color:{{ section.settings.personalization_content_text_color }}; }
+  .monogram_text { margin-bottom: 0.9375rem; background-position: 50% 50%; background-repeat: no-repeat; background-color: #fff; background-size: cover; text-align: center !important; font-size: 1.125rem; height: 8.125rem !important; }
+  .e2m_product_customiser { flex:0 1 350px; border: 0px solid #d5d5d5; background: {{section.settings.personalization_background_color}}; color:{{section.settings.personalization_heading_text_color}}; padding:0.9375rem; margin-bottom:20px;}
+  .monogram_text { color: #454243; font-size: 0.9375rem; height: 2.9375rem; border-top: 0; border-left: 0; border-right: 0; border: 1px solid #d5d5d5; background-color: rgba(254, 254, 254, 0); box-shadow: none; padding: 0.5rem 0.9375rem; transition: all 0.2s linear; margin-bottom: 1.875rem; background-size: cover !important; }
+  .custom-info{font-size: 13px;background: #9DD5FC;padding: 8px;color: #303030;line-height: 18px;}
+  #CUSTOMIZATION{min-height:0;}
+  .e2m_product_customiser label{line-height:1;}
+ 
+  @media screen and (max-width: 1199px){
+  	p.line-item-property__field br {display: none;}   
+    #CUSTOMIZATION, select#font_type{height: 35px !important;min-height: 35px;}
+  }
+</style>
+{% endif %}
