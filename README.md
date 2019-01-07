@@ -5,7 +5,7 @@
 
 2.) Add schema code (schema.liquid) in product-template.liquid at the end of file before {% endschema %} from sections.
 	
-3.) Create new snippet as name "personalization" and paste below file code into it.  
+3.) Create new snippet name as "personalization" and paste below file code into it.  
 
 4.) Open product-template.liquid from sections and add {% include "personalization" %} snippet before qty box and add to cart button code.
 
