@@ -1,6 +1,6 @@
 # Custom-Options-For-Monogram
 
-1.) Add jQuery Version js on line no. 9 in theme.liquid before </head> tag.
+1.) Check jquery js file in your theme.liquid if exists then no need to add it this code else you can add jQuery Version js on line no. 9 in theme.liquid before </head> tag.
 {{ 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js' | script_tag }}
 
 2.) Add schema code in product-template.liquid at the end of file before {% endschema %} from sections.
