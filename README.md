@@ -7,7 +7,7 @@
 	
 3.) Create new snippet as name "personalization" and paste below file code into it.  
 
-4.) Open product-template.liquid from sections and add {% include "personalization" %} before qty box and add to cart button code.
+4.) Open product-template.liquid from sections and add {% include "personalization" %} snippet before qty box and add to cart button code.
 
 5.) That's it. Now you need to customise and set up settings fonts type from Theme Customise under Product page Tab at Product page sections.
 
