@@ -14,6 +14,6 @@
 6.) For More details about set up theme customise settings check below screenshots: 
 
 
-Demo Store:
+# Demo Store:
 https://custom-product-option.myshopify.com/collections/frontpage/products/demo-product
 
